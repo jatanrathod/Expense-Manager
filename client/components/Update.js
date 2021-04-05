@@ -17,7 +17,7 @@ class Update extends React.Component {
       messageFromServer: "",
       modalIsOpen: false,
     };
-    this.updateOne = this.updateOne.bind(this);
+    this.update = this.update.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -31,6 +31,14 @@ class Update extends React.Component {
       amount: this.props.expense.amount,
       month: this.props.expense.month,
       year: this.props.expense.year,
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      id: nextProps.expense._id,
+      description: nextProps.expense.description,
+      month: nextProps.expense.month,
+      year: nextProps.expense.year,
     });
   }
   openModal() {
@@ -69,9 +77,9 @@ class Update extends React.Component {
     }
   }
   onClick(e) {
-    this.updateOne(this);
+    this.update(this);
   }
-  updateOne(e) {
+  update(e) {
     axios
       .post(
         "/update",
@@ -108,7 +116,11 @@ class Update extends React.Component {
             className="Modal"
           >
             <Link
-              to={{ pathname: "/", search: "" }}
+              to={{
+                pathname: "/",
+                search:
+                  "?month=" + this.state.month + "&year=" + this.state.year,
+              }}
               style={{ textDecoration: "none" }}
             >
               <Button bsStyle="danger" bsSize="mini" onClick={this.closeModal}>
@@ -229,7 +241,11 @@ class Update extends React.Component {
             <div className="button-center">
               <h3>{this.state.messageFromServer}</h3>
               <Link
-                to={{ pathname: "/", search: "" }}
+                to={{
+                  pathname: "/",
+                  search:
+                    "?month=" + this.state.month + "&year=" + this.state.year,
+                }}
                 style={{ textDecoration: "none" }}
               >
                 <Button

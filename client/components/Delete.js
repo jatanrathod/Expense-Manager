@@ -7,13 +7,22 @@ import { Link } from "react-router-dom";
 class Delete extends React.Component {
   constructor() {
     super();
-    this.state = { id: "" };
+    this.state = { id: "", month: "", year: "" };
     this.onClick = this.onClick.bind(this);
     this.delete = this.delete.bind(this);
   }
   componentDidMount() {
     this.setState({
       id: this.props.expense._id,
+      month: this.props.expense.month,
+      year: this.props.expense.year,
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      id: nextProps.expense._id,
+      month: nextProps.expense.month,
+      year: nextProps.expense.year,
     });
   }
   onClick(e) {
@@ -26,7 +35,10 @@ class Delete extends React.Component {
     return (
       <Button bsStyle="danger" bsSize="small" onClick={this.onClick}>
         <Link
-          to={{ pathname: "/", search: "" }}
+          to={{
+            pathname: "/",
+            search: "?month=" + this.state.month + "&year=" + this.state.year,
+          }}
           style={{ textDecoration: "none" }}
         >
           <span className="glyphicon glyphicon-remove"></span>
