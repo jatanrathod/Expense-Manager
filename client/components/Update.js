@@ -17,7 +17,7 @@ class Update extends React.Component {
       messageFromServer: "",
       modalIsOpen: false,
     };
-    this.update = this.update.bind(this);
+    this.updateOne = this.updateOne.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -69,9 +69,9 @@ class Update extends React.Component {
     }
   }
   onClick(e) {
-    this.update(this);
+    this.updateOne(this);
   }
-  update(e) {
+  updateOne(e) {
     axios
       .post(
         "/update",
