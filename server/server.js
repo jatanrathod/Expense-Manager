@@ -1,4 +1,5 @@
 //server/server.js
+var mongoConnection = require("../bin/mongoConnection.js");
 var express = require("express");
 var router = require("./routes/routes.js");
 var path = require("path");
@@ -15,13 +16,11 @@ app.use(express.static(path.join(__dirname, "../client")));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: false }));
 
-mongoose.connect(
-  "mongodb+srv://jrathod:RJKing123@cluster0.9ftxx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+// mongoConnection.mongoURI will have get the connection string. I have maintaned in separate file 'mongoConnection'.
+mongoose.connect(mongoConnection.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use("/", router);
 
